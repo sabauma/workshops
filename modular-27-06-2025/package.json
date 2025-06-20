@@ -1,0 +1,23 @@
+{
+  "name": "modular-27-06-2025",
+  "version": "1.0.0",
+  "description": "Mojo GPU Programming Workshop Slides",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 8000",
+    "dev": "npx live-server --port=8001 --host=localhost --watch=slides.md,index.html"
+  },
+  "dependencies": {
+    "reveal.js": "^5.1.0",
+    "serve": "^14.2.3",
+    "live-server": "^1.2.2"
+  },
+  "keywords": [
+    "mojo",
+    "gpu",
+    "workshop",
+    "reveal.js"
+  ],
+  "author": "Modular Team",
+  "license": "MIT"
+}
