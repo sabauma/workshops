@@ -1,0 +1,15 @@
+# pixi environments
+.pixi
+*.egg-info
+
+# quarkdown
+quarkdown
+**/output/*
+!**/output/.gitkeep
+
+# cursor
+cursor
+
+# npm
+node_modules
+package-lock.json
