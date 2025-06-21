@@ -11,18 +11,24 @@
 ### Part 1: Foundations
 
 **1. Why Mojo🔥?**
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 **2. Setup Using [Pixi](https://pixi.sh/latest/)**
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 **3. Introduction to Mojo🔥 for GPU Programming**
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 ### Part 2: Practical Implementation
 
 **4. Hands-on GPU Programming in Mojo**
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 **5. Create your Own AI Model with MAX🧑‍🚀**
+<!-- .element: class="fragment" data-fragment-index="5" -->
 
 **6. PyTorch Integration**
+<!-- .element: class="fragment" data-fragment-index="6" -->
 
 ---
 
