@@ -1,7 +1,5 @@
 # Mojo🔥 GPU Programming Workshop
 
-**Date: June 27, 2025**
-
 A comprehensive workshop introducing GPU programming with Mojo🔥, featuring hands-on exercises, interactive slides, and real-world applications.
 
 ## 🎯 Workshop Overview
@@ -22,7 +20,7 @@ curl -fsSL https://pixi.sh/install.sh | sh
 
 ```bash
 git clone https://github.com/modular/workshops
-cd modular-27-06-2025
+cd mojo-gpu-programming
 ```
 
 ### 3. Install Dependencies

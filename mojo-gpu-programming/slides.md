@@ -1,7 +1,5 @@
 ## Mojo🔥 GPU Programming Workshop
 
-### June 27, 2025
-
 <div style="text-align: center;">
 <img src="./image/workshop.png" alt="workshop" width="800" height="400">
 </div>

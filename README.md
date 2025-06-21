@@ -19,7 +19,7 @@
 
 ## Workshop contents
 
-Follow the README of each workshop. For example [modular-27-06-2025](./modular-27-06-2025/README.md)
+Follow the README of each workshop.
 
 ## License
 
