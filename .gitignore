@@ -13,3 +13,6 @@ cursor
 # npm
 node_modules
 package-lock.json
+
+# pdf
+*.pdf
