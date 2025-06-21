@@ -775,6 +775,7 @@ if global_i < size:
 ### Simple Integration
 
 ```python
+import torch
 from max.torch import CustomOpLibrary
 
 # Load compiled Mojo kernels
