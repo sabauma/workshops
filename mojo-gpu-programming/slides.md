@@ -33,6 +33,8 @@
 
 - **Mojo🔥 GPU Puzzles** [github.com/modular/mojo-gpu-puzzles](https://github.com/modular/mojo-gpu-puzzles)
 
+- **Optimize custom ops for GPUs with Mojo🔥** [https://docs.modular.com/max/tutorials/custom-ops-matmul](https://docs.modular.com/max/tutorials/custom-ops-matmul)
+
 - **Forum** [forum.modular.com](https://forum.modular.com/)
 
 ---
