@@ -53,9 +53,12 @@
             --modular-code-constant: #6a9955;
         }
 
+        /* Import emoji fonts for PDF support */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+
         /* Root font configuration */
         .reveal {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Twemoji Mozilla', sans-serif;
             font-size: 32px;
             font-weight: 400;
             color: #ffffff;
@@ -70,7 +73,7 @@
         .reveal h4,
         .reveal h5,
         .reveal h6 {
-            font-family: 'Inter', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+            font-family: 'Inter', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Twemoji Mozilla', sans-serif;
             font-weight: 600;
             line-height: 1.2;
             margin: 0 0 20px 0;
@@ -358,6 +361,19 @@
             font-weight: 600;
         }
 
+        /* Special emoji rendering rules for PDF export */
+        @media print {
+            * {
+                font-family: 'Inter', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif !important;
+            }
+
+            /* Ensure emojis are visible in print */
+            .reveal {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+        }
+
         /* Enhanced syntax highlighting for better visibility */
         .reveal .hljs-keyword {
             color: #66d9ef !important;
@@ -409,6 +425,7 @@
     <script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
     <script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
     <script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="highlight.js"></script>
     <script src="mojolang.js"></script>
     <script>
         Reveal.initialize({
@@ -443,7 +460,12 @@
                         block.textContent.includes('fn ') ||
                         block.textContent.includes('struct ')) {
                         block.className = 'language-mojo hljs';
-                        hljs.highlightElement(block);
+                        // Try multiple highlight methods
+                        if (typeof hljs !== 'undefined' && hljs.highlightElement) {
+                            hljs.highlightElement(block);
+                        } else if (window.RevealHighlight && window.RevealHighlight.highlightBlock) {
+                            window.RevealHighlight.highlightBlock(block);
+                        }
                     }
                 });
             }, 100);

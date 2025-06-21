@@ -43,21 +43,27 @@ This will automatically install:
 ```bash
 pixi run dev-slides
 ```
-Opens slides at `http://localhost:8001` with live reload when you edit `slides.md`.
+Opens slides at `http://localhost:3034` with live reload when you edit `slides.md`.
 
 ### Presentation Mode
 
 ```bash
 pixi run slides
 ```
-Serves slides at `http://localhost:8000` for stable presentation.
+Serves slides at `http://localhost:3033` for stable presentation.
 
-### PDF
+### PDF Export
 
 ```bash
 pixi run pdf
 ```
 Starts server and provides instructions for manual PDF export via Chrome.
+
+**Automated PDF Export:**
+```bash
+npm run export-pdf
+```
+Generates `mojo-gpu-workshop.pdf` automatically with emoji support.
 
 ## 🔧 Troubleshooting
 
@@ -66,9 +72,9 @@ Starts server and provides instructions for manual PDF export via Chrome.
 **Slides not loading:**
 ```bash
 # Check if port is available
-lsof -i :8000
+lsof -i :3033
 # Try different port
-npx serve . -p 8080
+pixi run npx serve . -p 4000
 ```
 
 **Syntax highlighting errors:**
