@@ -3,7 +3,7 @@
 ### June 27, 2025
 
 <div style="text-align: center;">
-<img src="./image/workshop.png" alt="workshop" width="600" height="400">
+<img src="./image/workshop.png" alt="workshop" width="800" height="400">
 </div>
 
 ---
@@ -25,6 +25,17 @@
 **5. Create your Own AI Model with MAX🧑‍🚀**
 
 **6. PyTorch Integration**
+
+---
+
+# Resources
+
+- **Introduction to GPU Programming in Mojo🔥**
+[https://docs.modular.com/mojo/manual/gpu/architecture](https://docs.modular.com/mojo/manual/gpu/architecture)
+
+- **Mojo🔥 GPU Puzzles** [github.com/modular/mojo-gpu-puzzles](https://github.com/modular/mojo-gpu-puzzles)
+
+- **Forum** [forum.modular.com](https://forum.modular.com/)
 
 ---
 
@@ -373,15 +384,19 @@ fn loop_control():
 
 ## Hands-on GPU Programming with Mojo🔥
 
-### GPU Programming Fundamentals
-
 ---
 
-## Clone the Mojo🔥 GPU Puzzles
+### Clone the Mojo🔥 GPU Puzzles
 
 ```bash
 git clone https://github.com/modular/mojo-gpu-puzzles
 cd mojo-gpu-puzzles
+```
+
+Make sure you've Pixi installed. See [https://prefix.dev/](https://prefix.dev/)
+
+```bash
+curl -fsSL https://pixi.sh/install.sh | sh
 ```
 
 🌐 **Online Version**: [builds.modular.com/puzzles](https://builds.modular.com/puzzles)
@@ -390,16 +405,390 @@ cd mojo-gpu-puzzles
 
 ---
 
+## GPU Programming Fundamentals
+
+---
+
+<div style="display: flex; align-items: flex-start; gap: 40px;">
+<div style="flex: 1;">
+
+### GPU vs CPU Architecture
+- **CPUs**: Few powerful cores optimized for sequential processing and complex decision making
+- **GPUs**: Thousands of smaller, simpler cores designed for parallel processing
+- **Complementary**: CPU handles program flow and complex logic, GPU handles parallel computations
+
+</div>
+<div style="flex: 0 0 500px;">
+<img src="./image/cpu-gpu-architecture.png" alt="CPU vs GPU Architecture" width="500" height="400" style="border-radius: 5px;">
+</div>
+</div>
+
+---
+
+### GPU Hardware Components
+
+<img src="./image/sm-architecture.png" alt="SM Architecture" width="1000" height="400" style="border-radius: 5px;">
+
+---
+
+### GPU Hardware Components
+
+- **Streaming Multiprocessors (SMs)**: Self-contained processing factories that operate independently
+- **CUDA Cores/Stream Processors**: Basic arithmetic units performing calculations
+- **Tensor/Matrix Cores**: Specialized units for matrix multiplication and AI operations
+- **Register Files**: Ultra-fast storage for thread-specific data
+- **Shared Memory/L1 Cache**: Low-latency memory for data sharing between threads
+
+---
+
+### GPU Execution Model
+
+<img src="./image/grid-hierarchy.png" alt="Grid hierarchy" width="700" height="600" style="border-radius: 5px;">
+
+---
+
+### GPU Execution Model
+- **Kernel**: Function that runs on GPU across thousands/millions of threads
+- **Grid**: Top-level organization of all threads executing a kernel
+- **Thread Blocks**: Groups of threads that can collaborate and share memory
+- **Warps**: Subsets of 32-64 threads that execute the same instruction simultaneously
+- **SIMT**: Single Instruction, Multiple Threads execution model
+
+---
+
+### Key Performance Concepts
+- **Warp Divergence**: Performance penalty when threads in a warp take different paths
+- **Memory Coalescing**: Efficient memory access when threads access contiguous locations
+- **Thread Block Sizing**: Should be multiples of warp size for optimal resource usage
+- **Latency Hiding**: GPU switches between warps to hide memory access delays
+
+---
+
+### Your First Kernel
+
+Print block and thread ids for `grid_dim=2` and `block_dim=4`
+
+In `main.mojo`:
+
+```mojo
+from gpu import block_idx, thread_idx
+from gpu.host import DeviceContext
+
+fn print_threads():
+    print("Block index:", block_idx.x, "\t", "Thread index: ", thread_idx.x)
+
+def main():
+    # create device context
+    ctx = DeviceContext()
+    # GPU kernel launches asynchronously - doesn't block Host (CPU)
+    ctx.enqueue_function[print_threads](grid_dim=2, block_dim=4)
+    # synchronize Host thread with GPU
+    ctx.synchronize()
+```
+
+---
+
+### Your First Kernel
+
+Run `pixi run mojo main.mojo`
+
+```output
+ Block index: 1          Thread index:  0
+ Block index: 1          Thread index:  1
+ Block index: 1          Thread index:  2
+ Block index: 1          Thread index:  3
+ Block index: 0          Thread index:  0
+ Block index: 0          Thread index:  1
+ Block index: 0          Thread index:  2
+ Block index: 0          Thread index:  3
+```
+
+👁️ Notice the Parallel execution of GPU threads
+
+---
+
+## Puzzle 1: Map
+
+Adds `10` to each position of vector `a` and stores it in vector `output`.
+
+```mojo
+alias SIZE = 4
+alias BLOCKS_PER_GRID = 1
+alias THREADS_PER_BLOCK = SIZE
+alias dtype = DType.float32
+
+fn add_10(
+    output: UnsafePointer[Scalar[dtype]], a: UnsafePointer[Scalar[dtype]]
+):
+    i = thread_idx.x
+    # FILL ME IN (roughly 1 line)
+```
+
+Run `pixi run p01`
+
+🧩 Details [Puzzle 1](https://builds.modular.com/puzzles/puzzle_01/puzzle_01.html)
+
+---
+
+## Solution
+
+```mojo
+fn add_10(
+    output: UnsafePointer[Scalar[dtype]], a: UnsafePointer[Scalar[dtype]]
+):
+    i = thread_idx.x
+    output[i] = a[i] + 10
+```
+
+---
+
+## Puzzle 3: Guards
+
+Add `10` to each position of vector `a` and stores it in vector `output`. You have **more threads than positions**.
+
+
+```mojo
+alias SIZE = 4
+alias BLOCKS_PER_GRID = 1
+alias THREADS_PER_BLOCK = (8, 1)
+alias dtype = DType.float32
+
+fn add_10_guard(output: UnsafePointer[Scalar[dtype]],
+    a: UnsafePointer[Scalar[dtype]],
+    size: Int,
+):
+    i = thread_idx.x
+    # FILL ME IN (roughly 2 lines)
+```
+
+Run `pixi run p03`
+
+🧩 Details [Puzzle 3](https://builds.modular.com/puzzles/puzzle_03/puzzle_03.html)
+
+---
+
+## Solution
+
+```mojo
+fn add_10_guard(
+    output: UnsafePointer[Scalar[dtype]],
+    a: UnsafePointer[Scalar[dtype]],
+    size: Int,
+):
+    i = thread_idx.x
+    if i < size:
+        output[i] = a[i] + 10.0
+```
+
+---
+
+## Puzzle 4: 2D Map
+
+Add `10` to each position of 2D square matrix `a` and stores it in 2D square matrix `output`. Note `a` is row-major i.e. rows are stored in memory.
+
+```mojo
+alias SIZE = 2
+alias BLOCKS_PER_GRID = 1
+alias THREADS_PER_BLOCK = (3, 3)
+alias dtype = DType.float32
+
+fn add_10_2d(
+    output: UnsafePointer[Scalar[dtype]],
+    a: UnsafePointer[Scalar[dtype]],
+    size: Int,
+):
+    row = thread_idx.y
+    col = thread_idx.x
+    # FILL ME IN (roughly 2 lines)
+```
+
+🧩 Details [Puzzle 4](https://builds.modular.com/puzzles/puzzle_04/puzzle_04.html)
+
+---
+
+## Solution
+
+Indexing convention:
+- `thread_idx.y` corresponds to the row index
+- `thread_idx.x` corresponds to the column index
+
+```mojo
+fn add_10_2d(
+    output: UnsafePointer[Scalar[dtype]],
+    a: UnsafePointer[Scalar[dtype]],
+    size: Int,
+):
+    row = thread_idx.y
+    col = thread_idx.x
+    if row < size and col < size:
+        output[row * size + col] = a[row * size + col] + 10.0
+```
+
+---
+
+## Why `LayoutTensor`?
+
+Growing challenging with raw `UnsafePointer`
+
+```mojo
+# 2D indexing coming in later puzzles
+idx = row * WIDTH + col
+
+# 3D indexing
+idx = (batch * HEIGHT + row) * WIDTH + col
+
+# With padding
+idx = (batch * padded_height + row) * padded_width + col
+```
+
+---
+
+## Why `LayoutTensor`?
+
+Idiomatic access `LayoutTensor`:
+
+```mojo
+output[i, j] = a[i, j] + 10.0  # 2D indexing
+output[b, i, j] = a[b, i, j] + 10.0  # 3D indexing
+```
+
+and more advanced features preview:
+
+```mojo
+# Column-major layout
+layout_col = Layout.col_major(HEIGHT, WIDTH)
+# Tiled layout (for better cache utilization)
+layout_tiled = tensor.tiled[4, 4](HEIGHT, WIDTH)
+# Vectorized access
+vec_tensor = tensor.vectorize[1, simd_width]()
+# Asynchronous transfers
+copy_dram_to_sram_async[thread_layout=layout](dst, src)
+# Tensor Core operations (coming in later puzzles)
+mma_op = TensorCore[dtype, out_type, Index(M, N, K)]()
+result = mma_op.mma_op(a_reg, b_reg, c_reg)
+```
+
+---
+
+### Back to Puzzle 4: 2D Map
+
+**Raw `UnsafePointer` approach:**
+
+```mojo
+row = thread_idx.y
+col = thread_idx.x
+if row < size and col < size:
+    output[row * size + col] = a[row * size + col] + 10.0
+```
+
+**`LayoutTensor` approach:**
+
+```mojo
+row = thread_idx.y
+col = thread_idx.x
+if row < size and col < size:
+    output[row, col] = a[row, col] + 10.0
+```
+
+---
+
+## Puzzle 8: Shared Memory
+
+Add `10` to each position of a vector `a` and stores it in vector `output`. You have **fewer threads per block** than the size of `a`.
+
+```mojo
+# Allocate shared memory using tensor builder
+shared = tb[dtype]().row_major[TPB]().shared().alloc()
+
+global_i = block_dim.x * block_idx.x + thread_idx.x
+local_i = thread_idx.x
+# Copy local data into shared memory
+if global_i < size:
+    shared[local_i] = a[global_i]
+
+# wait for all threads to complete works within a thread block
+barrier()
+
+# FILL ME IN (roughly 2 lines)
+```
+
+🧩 Details [Puzzle 8](https://builds.modular.com/puzzles/puzzle_08/puzzle_08.html)
+
+---
+
+## Solution
+
+```mojo
+# Allocate shared memory using tensor builder
+shared = tb[dtype]().row_major[TPB]().shared().alloc()
+
+global_i = block_dim.x * block_idx.x + thread_idx.x
+local_i = thread_idx.x
+
+if global_i < size:
+    shared[local_i] = a[global_i]
+# Copy local data into shared memory
+barrier()
+# Bound-check and store to global memory
+if global_i < size:
+    output[global_i] = shared[local_i] + 10
+```
+
+---
+
+<!-- .slide: class="center-slide" -->
+## Model Development with MAX🧑‍🚀 (TODO: Brad)
+
+---
+
+<!-- .slide: class="center-slide" -->
+## PyTorch Custom Ops Integration (Beta Feature)
+
+### 🚀 Mojo Kernels 🤝 PyTorch Models
+
+---
+
+### Key Benefits
+
+- ⚡ **High-performance kernels** in Mojo🔥
+- 🐍 **Familiar PyTorch workflow**
+- 🔄 **Seamless integration** - no framework switching
+- 🎯 **Target-agnostic** - same code runs on CPU/GPU
+
+---
+
+### Simple Integration
+
+```python
+from max.torch import CustomOpLibrary
+
+# Load compiled Mojo kernels
+ops = CustomOpLibrary("./operations")
+
+# Use in PyTorch as normal
+@torch.compile
+def my_model(x):
+    return ops.my_custom_kernel(x)
+```
+
+📖 **Tutorial**: [docs.modular.com/max/tutorials/custom-kernels-pytorch](https://docs.modular.com/max/tutorials/custom-kernels-pytorch)
+
+💻 **Code**: [https://github.com/modular/modular/tree/main/examples/pytorch_custom_ops](https://github.com/modular/modular/tree/main/examples/pytorch_custom_ops)
+
+---
+
+### Up for a challenge? ✋
+
+- [🧩 Puzzle 19: Embedding Op](https://builds.modular.com/puzzles/puzzle_19/puzzle_19.html)
+- [🧩 Puzzle 20: Kernel Fusion and Custom Backward Pass](https://builds.modular.com/puzzles/puzzle_20/puzzle_20.html)
+
+---
+
+<!-- .slide: class="center-slide" -->
 # Thank You! 🔥
 
 ## Questions & Discussion
 
 _Let's build the future of AI programming together!_
-
-**GPU Puzzles**
-[github.com/modular/mojo-gpu-puzzles](https://github.com/modular/mojo-gpu-puzzles)
-
-**Community**
-[community.modular.com](https://community.modular.com/)
 
 Note: Thank you for joining this workshop! Continue learning with the resources provided, and don't hesitate to reach out to the community for support.

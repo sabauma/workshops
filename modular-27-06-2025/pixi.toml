@@ -6,9 +6,10 @@ platforms = ["osx-arm64", "linux-64"]
 version = "0.0.0"
 
 [tasks]
-install-reveal = "npm install"
-slides = "npm start"
+install = "npm install"
 dev-slides = "npm run dev"
+slides = "npm start"
+pdf = "npm run pdf"
 
 [dependencies]
 nodejs = ">=22.13.0,<22.14"
