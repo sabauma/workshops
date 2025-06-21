@@ -507,7 +507,19 @@ Run `pixi run mojo main.mojo`
 
 ---
 
-## Puzzle 1: Map
+## [🧩Puzzle 1: Map](https://builds.modular.com/puzzles/puzzle_01/puzzle_01.html)
+
+Adds `10` to each position of vector `a` and stores it in vector `output`.
+
+</div>
+<div style="flex: 0 0 800px;">
+<img src="./gifs/puzzle_01_viz.gif" alt="Puzzle 01" width="800" height="400" style="border-radius: 5px;">
+</div>
+</div>
+
+---
+
+## [🧩Puzzle 1: Map](https://builds.modular.com/puzzles/puzzle_01/puzzle_01.html)
 
 Adds `10` to each position of vector `a` and stores it in vector `output`.
 
@@ -526,8 +538,6 @@ fn add_10(
 
 Run `pixi run p01`
 
-🧩 Details [Puzzle 1](https://builds.modular.com/puzzles/puzzle_01/puzzle_01.html)
-
 ---
 
 ## Solution
@@ -542,10 +552,21 @@ fn add_10(
 
 ---
 
-## Puzzle 3: Guards
+## [🧩Puzzle 3: Guards](https://builds.modular.com/puzzles/puzzle_03/puzzle_03.html)
 
 Add `10` to each position of vector `a` and stores it in vector `output`. You have **more threads than positions**.
 
+</div>
+<div style="flex: 0 0 800px;">
+<img src="./gifs/puzzle_03_viz.gif" alt="Puzzle 03" width="800" height="400" style="border-radius: 5px;">
+</div>
+</div>
+
+---
+
+## [🧩Puzzle 3: Guards](https://builds.modular.com/puzzles/puzzle_03/puzzle_03.html)
+
+Add `10` to each position of vector `a` and stores it in vector `output`. You have **more threads than positions**.
 
 ```mojo
 alias SIZE = 4
@@ -562,8 +583,6 @@ fn add_10_guard(output: UnsafePointer[Scalar[dtype]],
 ```
 
 Run `pixi run p03`
-
-🧩 Details [Puzzle 3](https://builds.modular.com/puzzles/puzzle_03/puzzle_03.html)
 
 ---
 
@@ -582,7 +601,29 @@ fn add_10_guard(
 
 ---
 
-## Puzzle 4: 2D Map
+## [🧩Puzzle 4: 2D Map](https://builds.modular.com/puzzles/puzzle_04/puzzle_04.html)
+
+Add `10` to each position of 2D square matrix `a` and stores it in 2D square matrix `output`. Note `a` is row-major i.e. rows are stored in memory.
+
+</div>
+<div style="flex: 0 0 800px;">
+<img src="./gifs/puzzle_04_viz.gif" alt="Puzzle 04" width="800" height="400" style="border-radius: 5px;">
+</div>
+</div>
+
+---
+
+## Thread Indexing Convention
+
+</div>
+<div style="flex: 0 0 800px;">
+<img src="./gifs/thread_indexing_viz.gif" alt="thread indexing" width="800" height="400" style="border-radius: 5px;">
+</div>
+</div>
+
+---
+
+## [🧩Puzzle 4: 2D Map](https://builds.modular.com/puzzles/puzzle_04/puzzle_04.html)
 
 Add `10` to each position of 2D square matrix `a` and stores it in 2D square matrix `output`. Note `a` is row-major i.e. rows are stored in memory.
 
@@ -601,8 +642,6 @@ fn add_10_2d(
     col = thread_idx.x
     # FILL ME IN (roughly 2 lines)
 ```
-
-🧩 Details [Puzzle 4](https://builds.modular.com/puzzles/puzzle_04/puzzle_04.html)
 
 ---
 
@@ -709,7 +748,19 @@ if row < size and col < size:
 
 ---
 
-## Puzzle 8: Shared Memory
+## [🧩Puzzle 8: Shared Memory](https://builds.modular.com/puzzles/puzzle_08/puzzle_08.html)
+
+Add `10` to each position of a vector `a` and stores it in vector `output`. You have **fewer threads per block** than the size of `a`.
+
+</div>
+<div style="flex: 0 0 800px;">
+<img src="./gifs/puzzle_08_viz.gif" alt="Puzzle 08" width="800" height="400" style="border-radius: 5px;">
+</div>
+</div>
+
+---
+
+## [🧩Puzzle 8: Shared Memory](https://builds.modular.com/puzzles/puzzle_08/puzzle_08.html)
 
 Add `10` to each position of a vector `a` and stores it in vector `output`. You have **fewer threads per block** than the size of `a`.
 
@@ -728,8 +779,6 @@ barrier()
 
 # FILL ME IN (roughly 2 lines)
 ```
-
-🧩 Details [Puzzle 8](https://builds.modular.com/puzzles/puzzle_08/puzzle_08.html)
 
 ---
 
