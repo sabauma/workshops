@@ -100,7 +100,7 @@ ctx = DeviceContext()
 a = ctx.enqueue_create_buffer[dtype](size)
 b = ctx.enqueue_create_buffer[dtype](size)
 c = ctx.enqueue_create_buffer[dtype](size)
-ctx.enqueue_function[vector_add[DType.int32, size]](
+ctx.enqueue_function[vector_add[dtype, size]](
     a.unsafe_ptr(), b.unsafe_ptr(), c.unsafe_ptr(),
     grid_dim=blocks, block_dim=threads
 )
@@ -379,7 +379,6 @@ fn loop_control():
 ---
 
 <!-- .slide: class="center-slide" -->
-
 ## Hands-on GPU Programming with Mojo🔥
 
 ---
@@ -403,6 +402,7 @@ curl -fsSL https://pixi.sh/install.sh | sh
 
 ---
 
+<!-- .slide: class="center-slide" -->
 ## GPU Programming Fundamentals
 
 ---
@@ -664,6 +664,23 @@ copy_dram_to_sram_async[thread_layout=layout](dst, src)
 # Tensor Core operations (coming in later puzzles)
 mma_op = TensorCore[dtype, out_type, Index(M, N, K)]()
 result = mma_op.mma_op(a_reg, b_reg, c_reg)
+```
+
+---
+
+## How to use `LayoutTensor`?
+
+`LayoutTensor` can be both on CPU and GPU depending on where the underlying data pointer lives.
+
+```mojo
+from layout import Layout, LayoutTensor
+# Define layout
+alias layout = Layout.row_major(2, 3)
+# Allocate and initialized memory either on Host (CPU) or Device (GPU)
+data_ptr = ...
+# Create tensor using the `date_ptr`
+tensor = LayoutTensor[mut=True, dtype, layout](data_ptr)
+tensor[0, 0] += 1
 ```
 
 ---
