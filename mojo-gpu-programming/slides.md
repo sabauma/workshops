@@ -39,9 +39,11 @@
 
 - **Mojo🔥 GPU Puzzles** [github.com/modular/mojo-gpu-puzzles](https://github.com/modular/mojo-gpu-puzzles)
 
-- **Optimize custom ops for GPUs with Mojo🔥** [https://docs.modular.com/max/tutorials/custom-ops-matmul](https://docs.modular.com/max/tutorials/custom-ops-matmul)
+- **Optimize Custom Ops for GPUs with Mojo🔥** [https://docs.modular.com/max/tutorials/custom-ops-matmul](https://docs.modular.com/max/tutorials/custom-ops-matmul)
 
-- **Forum** [forum.modular.com](https://forum.modular.com/)
+- **🤖AI Coding Assistance Guide** [https://docs.modular.com/max/coding-assistants/](https://docs.modular.com/max/coding-assistants/)
+
+- **✅Forum** [forum.modular.com](https://forum.modular.com/)
 
 ---
 
