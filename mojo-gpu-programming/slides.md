@@ -811,7 +811,201 @@ if global_i < size:
 ---
 
 <!-- .slide: class="center-slide" -->
-## Model Development with MAX🧑‍🚀 (TODO: Brad)
+## Model Development with MAX🧑‍🚀
+
+---
+
+## Resources
+
+- **Get started with MAX graphs**
+[https://docs.modular.com/max/tutorials/get-started-with-max-graph-in-python](https://docs.modular.com/max/tutorials/get-started-with-max-graph-in-python)
+- **Build an MLP block as a module**
+[https://docs.modular.com/max/tutorials/build-an-mlp-block](https://docs.modular.com/max/tutorials/build-an-mlp-block)
+- **Examples of custom operations**
+[https://github.com/modular/modular/tree/main/examples/custom_ops](https://github.com/modular/modular/tree/main/examples/custom_ops)
+
+
+---
+
+## Models in MAX
+
+- Built using the MAX Graph API
+- Defined in Python
+- Tensor computation graphs, with nodes in Mojo
+
+---
+
+## 🐍 Why Python for MAX Graphs?
+
+- Direct integration with Python ecosystem
+- Familiar language to ML engineers
+- Computation time dominated by graph execution
+
+---
+
+## Serving LLMs with MAX
+
+```sh
+max serve --model-path=Qwen/Qwen2.5-0.5B-Instruct
+```
+
+or
+
+```sh
+python -m max.entrypoints.pipelines serve --model-path=Qwen/Qwen2.5-0.5B-Instruct
+```
+
+- Python source code for `max.serve` is in OSS
+
+---
+
+## Testing LLM Text Generation with MAX
+
+```sh
+max generate --model-path=Qwen/Qwen2.5-0.5B-Instruct --prompt "Hello there."
+```
+
+---
+
+## MAX Graph basics
+
+- Graph (`max.graph`)
+- Graph operations (`max.graph.ops`)
+- Devices (`max.driver`)
+- Inference sessions (`max.engine`)
+
+---
+
+## Constructing a graph
+
+```python
+input_type = TensorType(
+    dtype=DType.float32, shape=(1,), device=DeviceRef.CPU()
+)
+with Graph(
+    "simple_add_graph", input_types=(input_type, input_type)
+) as graph:
+    lhs, rhs = graph.inputs
+    out = ops.add(lhs, rhs)
+    graph.output(out)
+```
+
+---
+
+## Compiling and executing a graph
+
+```python
+session = engine.InferenceSession()
+model = session.load(graph)
+
+output = model.execute(a, b)[0]
+result = output.to_numpy()
+```
+
+---
+
+## Graph operations
+
+- Simple atomic operations, lower level than with other frameworks
+- Rely on graph compiler for fusion
+- Full list at [https://docs.modular.com/max/api/python/graph/ops](https://docs.modular.com/max/api/python/graph/ops)
+
+```
+...
+abs()
+add()
+allgather()
+argmax()
+argmin()
+argsort()
+as_interleaved_complex()
+...
+```
+
+---
+
+## `max.nn` layers
+
+- Higher-level abstractions on operations
+- Designed to ease porting from PyTorch
+- Only beginning to build these out
+  - If we're missing obvious and helpful ones, let us know
+
+---
+
+## Defining custom operations in Mojo
+
+```mojo
+@compiler.register("add_one")
+struct AddOne:
+    @staticmethod
+    fn execute[
+        target: StaticString,
+    ](
+        output: OutputTensor,
+        x: InputTensor[dtype = output.dtype, rank = output.rank],
+        ctx: DeviceContextPtr,
+    ) raises:
+        @parameter
+        @always_inline
+        fn elementwise_add_one[
+            width: Int
+        ](idx: IndexList[x.rank]) -> SIMD[x.dtype, width]:
+            return x.load[width](idx) + 1
+
+        foreach[elementwise_add_one, target=target](output, ctx)
+```
+
+---
+
+## Using custom operations in Python graphs
+
+```python
+mojo_kernels = Path(__file__).parent / "kernels"
+
+device = CPU() if accelerator_count() == 0 else Accelerator()
+graph = Graph(
+    "addition",
+    forward=lambda x: ops.custom(
+        name="add_one",
+        device=DeviceRef.from_device(device),
+        values=[x],
+        out_types=[
+            TensorType(
+                dtype=x.dtype,
+                shape=x.tensor.shape,
+                device=DeviceRef.from_device(device),
+            )
+        ],
+    )[0].tensor,
+    input_types=[
+        TensorType(
+            dtype,
+            shape=[rows, columns],
+            device=DeviceRef.from_device(device),
+        ),
+    ],
+    custom_extensions=[mojo_kernels],
+)
+```
+
+---
+
+## Model architectures
+
+- MAX supports a range of common LLM architectures already
+- Source code for them is in [`modular/max/pipelines/architectures`](https://github.com/modular/modular/tree/main/max/pipelines/architectures)
+- Check there before adding a new architecture, may be present or there may be a close enough architecture to modify
+
+---
+
+## Registering and serving a model architecture
+
+- Implement the main model graph
+- Handle model configuration metadata
+- Map weight names to internal structure
+- Register the architecture with MAX
+- Load the architecture using `--custom-architectures`
 
 ---
 
@@ -856,6 +1050,16 @@ def my_model(x):
 
 - [🧩 Puzzle 19: Embedding Op](https://builds.modular.com/puzzles/puzzle_19/puzzle_19.html)
 - [🧩 Puzzle 20: Kernel Fusion and Custom Backward Pass](https://builds.modular.com/puzzles/puzzle_20/puzzle_20.html)
+
+---
+
+## Using AI coding agents with MAX and Mojo
+
+- When developing new kernels, start inside the root of a `modular` checkout
+  - The repository has pre-populated CLAUDE.md and Cursor rules
+- For external projects, refer to a `modular` checkout for latest APIs and examples
+- Point to our available `llms.txt` for latest documentation
+- For more, see ["Using AI coding assistants"](https://docs.modular.com/max/coding-assistants)
 
 ---
 
