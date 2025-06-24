@@ -1,7 +1,7 @@
 ## Mojo🔥 GPU Programming Workshop
 
 <div style="text-align: center;">
-<img src="./image/workshop.png" alt="workshop" width="800" height="400">
+<img src="./image/workshop.png" alt="workshop" width="700" height="400">
 </div>
 
 ---
@@ -32,7 +32,7 @@
 
 ---
 
-# Resources
+# 📚 Resources
 
 - **Introduction to GPU Programming in Mojo🔥**
 [https://docs.modular.com/mojo/manual/gpu/architecture](https://docs.modular.com/mojo/manual/gpu/architecture)
@@ -621,11 +621,12 @@ Add `10` to each position of 2D square matrix `a` and stores it in 2D square mat
 
 ---
 
+<!-- .slide: class="center-slide" -->
 ## Thread Indexing Convention
 
 </div>
 <div style="flex: 0 0 800px;">
-<img src="./gifs/thread_indexing_viz.gif" alt="thread indexing" width="800" height="400" style="border-radius: 5px;">
+<img src="./gifs/thread_indexing_viz.gif" alt="thread indexing" width="800" height="500" style="border-radius: 5px;">
 </div>
 </div>
 
@@ -734,7 +735,7 @@ tensor[0, 0] += 1
 
 ---
 
-### Back to Puzzle 4: 2D Map
+## Back to Puzzle 4: 2D Map
 
 **Raw `UnsafePointer` approach:**
 
@@ -815,7 +816,7 @@ if global_i < size:
 
 ---
 
-## Resources
+## 📚 Resources
 
 - **Get started with MAX graphs**
 [https://docs.modular.com/max/tutorials/get-started-with-max-graph-in-python](https://docs.modular.com/max/tutorials/get-started-with-max-graph-in-python)
@@ -827,23 +828,27 @@ if global_i < size:
 
 ---
 
-## Models in MAX
+## 🤖 Models in MAX🧑‍🚀
 
-- Built using the MAX Graph API
-- Defined in Python
-- Tensor computation graphs, with nodes in Mojo
+- 🏗️ **Built using the MAX Graph API** - Unified computation framework
+- 🐍 **Defined in Python** - Familiar, productive development experience
+- ⚡ **Tensor computation graphs** - With lightning-fast Mojo nodes
 
 ---
 
 ## 🐍 Why Python for MAX Graphs?
 
-- Direct integration with Python ecosystem
-- Familiar language to ML engineers
-- Computation time dominated by graph execution
+**"Best of Both Worlds: Python Productivity + Mojo Performance"**
+
+- 🔗 **Direct integration** with Python's rich ML ecosystem
+- 👨‍💻 **Familiar language** to ML engineers and researchers
+- 🚀 **Computation time dominated by graph execution** - where Mojo shines!
 
 ---
 
-## Serving LLMs with MAX
+## 🚀 Serving LLMs with MAX
+
+**"Get your AI models running in seconds!"**
 
 ```sh
 max serve --model-path=Qwen/Qwen2.5-0.5B-Instruct
@@ -852,31 +857,40 @@ max serve --model-path=Qwen/Qwen2.5-0.5B-Instruct
 or
 
 ```sh
-python -m max.entrypoints.pipelines serve --model-path=Qwen/Qwen2.5-0.5B-Instruct
+python -m max.entrypoints.pipelines serve \
+  --model-path=Qwen/Qwen2.5-0.5B-Instruct
 ```
 
-- Python source code for `max.serve` is in OSS
+📚 **Explore the source**: [github.com/modular/modular](https://github.com/modular/modular/tree/main/max/serve)
 
 ---
 
-## Testing LLM Text Generation with MAX
+## 🧪 Testing LLM Text Generation with MAX
+
+**Quick validation of your model deployment**
 
 ```sh
 max generate --model-path=Qwen/Qwen2.5-0.5B-Instruct --prompt "Hello there."
 ```
 
----
-
-## MAX Graph basics
-
-- Graph (`max.graph`)
-- Graph operations (`max.graph.ops`)
-- Devices (`max.driver`)
-- Inference sessions (`max.engine`)
+💡 **Pro tip**: Perfect for development testing and demos!
 
 ---
 
-## Constructing a graph
+## 🧩 MAX Graph Basics
+
+**Core building blocks for high-performance AI**
+
+- 📊 **Graph** (`max.graph`) - Your computation blueprint
+- ⚙️ **Graph operations** (`max.graph.ops`) - Mathematical operations
+- 🖥️ **Devices** (`max.driver`) - CPU, GPU, accelerator management
+- 🎯 **Inference sessions** (`max.engine`) - Optimized execution runtime
+
+---
+
+### 🏗️ Construct a Graph
+
+**Building your first computation graph**
 
 ```python
 input_type = TensorType(
@@ -890,9 +904,13 @@ with Graph(
     graph.output(out)
 ```
 
+✨ **Clean, declarative syntax** - Just like you'd expect!
+
 ---
 
-## Compiling and executing a graph
+### ⚡ Compile and Execute a Graph
+
+**From definition to blazing-fast execution**
 
 ```python
 session = engine.InferenceSession()
@@ -902,38 +920,43 @@ output = model.execute(a, b)[0]
 result = output.to_numpy()
 ```
 
+🔥 **That's it!** MAX handles all the optimization magic behind the scenes.
+
 ---
 
-## Graph operations
+## 🔧 Graph Operations
 
-- Simple atomic operations, lower level than with other frameworks
-- Rely on graph compiler for fusion
-- Full list at [https://docs.modular.com/max/api/python/graph/ops](https://docs.modular.com/max/api/python/graph/ops)
+**Building blocks for any computation you can imagine**
+
+- 🧱 **Simple atomic operations** - Lower level than other frameworks
+- 🚀 **Rely on graph compiler for fusion** - Automatic optimization
+- 📖 **Comprehensive library** - Full list at [docs.modular.com/max/api/python/graph/ops](https://docs.modular.com/max/api/python/graph/ops)
 
 ```
 ...
-abs()
-add()
-allgather()
-argmax()
-argmin()
-argsort()
-as_interleaved_complex()
+abs()      add()         allgather()    argmax()
+argmin()   argsort()     as_interleaved_complex()
 ...
 ```
 
----
-
-## `max.nn` layers
-
-- Higher-level abstractions on operations
-- Designed to ease porting from PyTorch
-- Only beginning to build these out
-  - If we're missing obvious and helpful ones, let us know
+💎 **200+ operations** and growing!
 
 ---
 
-## Defining custom operations in Mojo
+## 🧠 `max.nn` Layers
+
+**High-level abstractions for rapid development**
+
+- 🏗️ **Higher-level abstractions** on operations
+- 🔄 **Designed to ease porting from PyTorch** - Familiar patterns
+- 🚧 **Rapidly expanding** - We're just getting started!
+  - 💡 Missing something obvious? **Let us know!**
+
+---
+
+### 🔥 Defining Custom Operations in Mojo
+
+**Unleash maximum performance with custom kernels**
 
 ```mojo
 @compiler.register("add_one")
@@ -958,7 +981,9 @@ struct AddOne:
 
 ---
 
-## Using custom operations in Python graphs
+### 🔗 Using Custom Operations in Python Graphs
+
+**Seamless integration: Python🐍 productivity meets Mojo🔥 performance**
 
 ```python
 mojo_kernels = Path(__file__).parent / "kernels"
@@ -989,23 +1014,31 @@ graph = Graph(
 )
 ```
 
----
-
-## Model architectures
-
-- MAX supports a range of common LLM architectures already
-- Source code for them is in [`modular/max/pipelines/architectures`](https://github.com/modular/modular/tree/main/max/pipelines/architectures)
-- Check there before adding a new architecture, may be present or there may be a close enough architecture to modify
+🎯 **Best of both worlds**: Write once in Mojo, use everywhere in Python!
 
 ---
 
-## Registering and serving a model architecture
+## 🏛️ Model Architectures
 
-- Implement the main model graph
-- Handle model configuration metadata
-- Map weight names to internal structure
-- Register the architecture with MAX
-- Load the architecture using `--custom-architectures`
+**Rich ecosystem of pre-built, optimized architectures**
+
+- 🎯 **MAX supports common LLM architectures** - Ready to use out of the box
+- 📂 **Open source implementations** - [`modular/max/pipelines/architectures`](https://github.com/modular/modular/tree/main/max/pipelines/architectures)
+- 🔍 **Check first, build later** - May already exist or have a close match to modify
+
+💡 **Transformer, Llama, Mistral, Qwen** and many more already supported!
+
+---
+
+## 🚀 Registering and Serving a Model Architecture
+
+**From research to production in 5 steps**
+
+- 📊 **Implement the main model graph** - Define your computation
+- ⚙️ **Handle model configuration metadata** - Parameters and settings
+- 🗺️ **Map weight names to internal structure** - Connect checkpoints to graph
+- 📝 **Register the architecture with MAX** - Make it discoverable
+- 🎯 **Load with `--custom-architectures`** - Deploy your custom model
 
 ---
 

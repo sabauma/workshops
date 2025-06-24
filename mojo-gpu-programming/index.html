@@ -20,30 +20,22 @@
     <style>
         /* No need to import fonts - they're loaded locally */
 
-        /* Global background image for all slides */
+        /* Remove global background - clean white background for all slides */
         .reveal .backgrounds .slide-background {
-            background-image: url('image/bg2.jpg') !important;
-            background-size: cover !important;
+            background: #ffffff !important;
+        }
+
+        /* First slide only - background image */
+        .reveal .backgrounds .slide-background:first-child {
+            background-image: url('image/bg.jpg') !important;
+            background-size: 100% 100% !important;
             background-position: center !important;
             background-repeat: no-repeat !important;
         }
 
-        .reveal .slide-background-content {
-            background-image: url('image/bg2.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        /* Override any specific background settings */
-        .reveal .slides section[data-background-image],
-        .reveal .slides section[data-background],
-        .reveal .slides section[data-background-color],
-        .reveal .slides section[data-background-gradient] {
-            background-image: url('image/bg2.jpg') !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
+        /* All other slides - clean white background */
+        .reveal .slides section:not(:first-child) {
+            background: #ffffff !important;
         }
 
         /* CSS Variables for custom highlight.css */
@@ -61,12 +53,23 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Twemoji Mozilla', sans-serif;
             font-size: 32px;
             font-weight: 400;
-            color: #ffffff;
+            color: #2c3e50;
             letter-spacing: 0.02em;
             word-spacing: 0.02em;
         }
 
-        /* Headings */
+        /* First slide - keep white text for background image */
+        .reveal .slides section:first-child,
+        .reveal .slides section:first-child h1,
+        .reveal .slides section:first-child h2,
+        .reveal .slides section:first-child h3,
+        .reveal .slides section:first-child p,
+        .reveal .slides section:first-child li,
+        .reveal .slides section:first-child strong {
+            color: #ffffff !important;
+        }
+
+        /* Headings - dark for non-background slides */
         .reveal h1,
         .reveal h2,
         .reveal h3,
@@ -77,7 +80,7 @@
             font-weight: 600;
             line-height: 1.2;
             margin: 0 0 20px 0;
-            color: #ffffff;
+            color: #2c3e50;
             letter-spacing: 0.01em;
             word-spacing: 0em;
             text-transform: none !important;
@@ -117,16 +120,16 @@
             margin-bottom: 8px;
         }
 
-        /* Code blocks */
+        /* Code blocks - enhanced contrast for white background */
         .reveal pre {
             font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
             font-size: 0.65em;
             line-height: 1.4;
             margin: 20px auto;
             border-radius: 8px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             background: #1a1a1a !important;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid #e0e0e0;
             max-width: 90%;
             text-align: left;
         }
@@ -142,64 +145,67 @@
         .reveal code {
             font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
             font-size: 0.8em;
-            color: #ff6b6b;
-            background: rgba(26, 26, 26, 0.9);
+            color: #e74c3c;
+            background: #f8f9fa;
             padding: 3px 8px;
             border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid #dee2e6;
         }
 
-        /* Blockquotes */
+        /* Blockquotes - updated for white background */
         .reveal blockquote {
             font-size: 0.9em;
             font-style: italic;
-            background: rgba(255, 255, 255, 0.1);
-            border-left: 4px solid #74b9ff;
+            background: #f8f9fa;
+            border-left: 4px solid #0984e3;
             padding: 20px;
             margin: 20px 0;
             border-radius: 4px;
-            color: #ffffff;
+            color: #2c3e50;
         }
 
-        /* Strong text */
+        /* Strong text - dark for readability */
         .reveal strong {
             font-weight: 600;
-            color: #ffffff;
+            color: #2c3e50;
         }
 
-        /* Links */
+        /* Links - better contrast for white background */
         .reveal a {
-            color: #74b9ff;
+            color: #0984e3;
             text-decoration: none;
             border-bottom: 1px solid transparent;
             transition: all 0.3s ease;
         }
 
         .reveal a:hover {
-            color: #a8e6cf;
-            border-bottom-color: #a8e6cf;
+            color: #2d3436;
+            border-bottom-color: #2d3436;
         }
 
-        /* Fragment highlights */
+        /* Fragment highlights - better contrast for white background */
         .reveal .slides section .fragment.highlight-red.visible {
-            color: #ff6b6b;
+            color: #e74c3c;
+            background: #ffeaa7;
         }
 
         .reveal .slides section .fragment.highlight-green.visible {
-            color: #55ff55;
+            color: #00b894;
+            background: #d1f2eb;
         }
 
         .reveal .slides section .fragment.highlight-blue.visible {
-            color: #74b9ff;
+            color: #0984e3;
+            background: #d6eaf8;
         }
 
-        /* Progress bar and controls */
+        /* Progress bar and controls - updated colors */
         .reveal .progress {
-            color: #74b9ff;
+            color: #0984e3;
         }
 
         .reveal .controls {
-            color: #74b9ff;
+            color: #0984e3;
         }
 
         /* Slide backgrounds */
@@ -353,12 +359,13 @@
         .reveal table th,
         .reveal table td {
             padding: 10px 15px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid #dee2e6;
         }
 
         .reveal table th {
-            background: #f8f9fa;
+            background: #e9ecef;
             font-weight: 600;
+            color: #2c3e50;
         }
 
         /* Special emoji rendering rules for PDF export */
@@ -441,11 +448,7 @@
             autoAnimateDuration: 1.0,
             viewDistance: 3,
             mobileViewDistance: 2,
-            // Global background image
-            parallaxBackgroundImage: 'image/bg2.jpg',
-            parallaxBackgroundSize: 'cover',
-            parallaxBackgroundPosition: 'center',
-            parallaxBackgroundRepeat: 'no-repeat',
+            // No global background - handled by CSS for first slide only
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
 
