@@ -34,12 +34,12 @@
 
 # 📚 Resources
 
+- **Modular OSS Repository** [https://github.com/modular/modular](https://github.com/modular/modular)
+
 - **Introduction to GPU Programming in Mojo🔥**
 [https://docs.modular.com/mojo/manual/gpu/architecture](https://docs.modular.com/mojo/manual/gpu/architecture)
 
 - **Mojo🔥 GPU Puzzles** [github.com/modular/mojo-gpu-puzzles](https://github.com/modular/mojo-gpu-puzzles)
-
-- **Optimize Custom Ops for GPUs with Mojo🔥** [https://docs.modular.com/max/tutorials/custom-ops-matmul](https://docs.modular.com/max/tutorials/custom-ops-matmul)
 
 - **🤖AI Coding Assistance Guide** [https://docs.modular.com/max/coding-assistants/](https://docs.modular.com/max/coding-assistants/)
 
@@ -391,8 +391,8 @@ fn loop_control():
 
 #### Parameters and the `@parameter for` decorator
 
-Mojo structs and functions can take parameters. Parameters are evaluated at
-compilation time, and act as constants at runtime.
+Mojo structs and functions can take parameters. `@parameter` annotations denote
+compile-time evaluation, like explicit loop unrolling:
 
 ```mojo
 fn repeat[count: Int](msg: String):
@@ -815,6 +815,8 @@ tensor = LayoutTensor[mut=True, dtype, layout](data_ptr)
 tensor[0, 0] += 1
 ```
 
+Mojo manual: ["Using LayoutTensor"](https://docs.modular.com/mojo/manual/layout/tensors)
+
 ---
 
 ## Back to Puzzle 4: 2D Map
@@ -904,6 +906,8 @@ if global_i < size:
 [https://docs.modular.com/max/tutorials/get-started-with-max-graph-in-python](https://docs.modular.com/max/tutorials/get-started-with-max-graph-in-python)
 - **Build an MLP block as a module**
 [https://docs.modular.com/max/tutorials/build-an-mlp-block](https://docs.modular.com/max/tutorials/build-an-mlp-block)
+- **Serve custom model architectures**
+[https://docs.modular.com/max/tutorials/serve-custom-model-architectures](https://docs.modular.com/max/tutorials/serve-custom-model-architectures)
 - **Examples of custom operations**
 [https://github.com/modular/modular/tree/main/examples/custom_ops](https://github.com/modular/modular/tree/main/examples/custom_ops)
 
@@ -1034,6 +1038,8 @@ argmin()   argsort()     as_interleaved_complex()
 - 🚧 **Rapidly expanding** - We're just getting started!
   - 💡 Missing something obvious? **Let us know!**
 
+-> [Translation guide from PyTorch to MAX](https://github.com/modular/modular/blob/main/docs/eng-design/docs/pytorch-to-max-mapping-guide.md)
+
 ---
 
 ### 🔥 Defining Custom Operations in Mojo
@@ -1115,6 +1121,8 @@ graph = Graph(
 ## 🚀 Registering and Serving a Model Architecture
 
 **From research to production in 5 steps**
+
+**Tutorial:** ["Serve custom model architectures"](https://docs.modular.com/max/tutorials/serve-custom-model-architectures)
 
 - 📊 **Implement the main model graph** - Define your computation
 - ⚙️ **Handle model configuration metadata** - Parameters and settings
