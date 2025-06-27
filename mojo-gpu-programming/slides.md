@@ -144,6 +144,7 @@ ctx.synchronize()
 
 ---
 
+
 ## Setup Using Pixi
 
 ### Prerequisites
@@ -191,6 +192,20 @@ pixi run mojo --version
 Note: Make sure everyone has their environment working before we proceed to coding.
 
 ---
+
+### VS Code Extension
+
+Be sure to use the [nightly VSCode
+extension](https://marketplace.visualstudio.com/items?itemName=modular-mojotools.vscode-mojo-nightly)
+instead of the stable extension. That will ensure that you're using the latest
+version to give you the best experience.
+
+<div style="text-align: center;">
+<img src="./image/nightly.jpg" alt="nightly" width="900" >
+</div>
+
+---
+
 
 <!-- .slide: class="center-slide" -->
 # Introduction to Mojo🔥
@@ -368,6 +383,73 @@ fn loop_control():
 ```
 
 💡 **GPU Note**: Control flows in kernels should be minimized for optimal performance!
+
+---
+
+
+### Compile Time Optimizations
+
+#### Parameters and the `@parameter for` decorator
+
+Mojo structs and functions can take parameters. Parameters are evaluated at
+compilation time, and act as constants at runtime.
+
+```mojo
+fn repeat[count: Int](msg: String):
+    @parameter
+    for i in range(count):
+        print(msg)
+
+repeat[3]("Hello")
+```
+
+```bash
+Hello
+Hello
+Hello
+```
+
+---
+
+### Compile Time Optimizations
+
+#### `@parameter if` decorator
+
+```mojo
+@parameter
+if True:
+    print("this will be included in the binary")
+else:
+    print("this will be eliminated at compile time")
+```
+
+---
+
+### Compile Time Specialization
+
+"Generics" refers to functions that can act on multiple types of values, or
+containers that can hold multiple types of values. For example, SIMD, can hold
+different data types/widths.
+
+```mojo
+struct SIMD[type: DType, size: Int]:
+    var value: … # Some low-level MLIR stuff here
+
+    # Many standard operators are supported.
+    fn __mult__(self, rhs: Self) -> Self: ...
+
+```
+
+```
+var vector = SIMD[DType.int16, 4](1, 2, 3, 4)
+vector = vector * vector
+for i in range(4):
+    print(vector[i], end=" ")
+```
+
+```bash
+1 4 9 16
+```
 
 ---
 
