@@ -1,0 +1,48 @@
+[workspace]
+authors = ["Modular <hello@modular.com>"]
+channels = ["conda-forge", "https://conda.modular.com/max-nightly"]
+name = "pytorch-max-bridge"
+platforms = ["linux-64"] # build slides works on MacOS
+version = "0.0.0"
+
+[feature.cuda]
+system-requirements = { cuda = "12" }
+channels = ["nvidia"]
+
+[feature.cuda.dependencies]
+cuda-toolkit = "12.*"
+
+[feature.cuda.pypi-dependencies]
+torch = { version = "==2.7.1", index = "https://download.pytorch.org/whl/cu128" }
+
+[feature.rocm]
+system-requirements = { }
+
+[feature.rocm.pypi-dependencies]
+torch = { version = "==2.7.1", index = "https://download.pytorch.org/whl/rocm6.3" }
+pytorch-triton-rocm = { index = "https://download.pytorch.org/whl/rocm6.3" }
+
+[tasks]
+slide-install = "npm install"
+dev-slides = "npm run dev"
+slides = "npm start"
+pdf = "npm run pdf"
+
+[dependencies]
+nodejs = ">=22.13.0,<22.14"
+python = ">=3.10,<3.13"
+ipykernel = ">=6.29.5,<7"
+max = "==25.5.0.dev2025071105"
+matplotlib = ">=3.10.3,<4"
+rich = ">=14.0.0,<15"
+notebook = ">=7.4.4,<8"
+ipywidgets = ">=8.1.7,<9"
+jupyterlab = ">=4.4.4,<5"
+scipy = ">=1.16.0,<2"
+
+[pypi-dependencies]
+transformers = ">=4.53.2, <5"
+
+[environments]
+cuda = { features = ["cuda"], solve-group = "cuda" }
+rocm = { features = ["rocm"], solve-group = "rocm" }

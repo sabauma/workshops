@@ -1,0 +1,29 @@
+{
+    "name": "pytorch-max-bridge",
+    "version": "1.0.0",
+    "description": "Bridging Pytorch with MAX and Mojo🔥",
+    "main": "index.html",
+    "scripts": {
+        "start": "npx serve . -p 3033",
+        "dev": "npx live-server --port=3034 --host=localhost --watch=slides.md,index.html",
+        "pdf": "npx serve . -p 3033 & echo 'Open http://localhost:3033?print-pdf in Chrome and Print to PDF'"
+    },
+    "dependencies": {
+        "reveal.js": "^5.1.0",
+        "serve": "^14.2.3",
+        "live-server": "^1.2.2"
+    },
+    "devDependencies": {
+        "decktape": "^3.12.0",
+        "concurrently": "^8.2.2",
+        "wait-on": "^7.2.0"
+    },
+    "keywords": [
+        "pytorch",
+        "max",
+        "mojo",
+        "reveal.js"
+    ],
+    "author": "Modular Team",
+    "license": "MIT"
+}
