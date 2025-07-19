@@ -103,7 +103,7 @@ Love to know the all the details? 👇
 ---
 
 <!-- .slide: class="center-slide" -->
-# Enter Modular
+# Enter Modular🚪
 
 ---
 
@@ -117,13 +117,15 @@ Love to know the all the details? 👇
 
 ---
 
-<!-- .slide: class="center-slide" -->
 ### Battery-included `pip install modular`*
 
 <small>*Temporary PyTorch dependencies requires including these extras which we'll eliminate soon</small>
 <small> Check out [docs.modular.com/max/get-started](https://docs.modular.com/max/get-started)</small>
 
-Need smaller pieces: `pip install max`, `pip install mojo`
+Smaller packages:
+
+- `pip install max`
+- `pip install mojo` (Coming Soon!)
 
 ---
 
@@ -196,7 +198,7 @@ trait Bar:
 ---
 
 <!-- .slide: class="center-slide" -->
-## Why You Should Care: Real Impact, Real Savings
+## Why You Should Care🧐
 
 ---
 
@@ -223,8 +225,6 @@ Recent success stories and partnerships:
 - **Inworld**: [synthesized audio on average ~70% faster if compared to vanilla vLLM-based implementation on NVIDIA B200](https://inworld.ai/blog/how-we-made-state-of-the-art-speech-synthesis-scalable-with-modular)
 
 - **Tensorwave**: [Save up to 70% with MAX, the fastest inference engine on AMD MI325X compute](https://tensorwave.com/blog/save-up-to-70-with-max-the-fastest-inference-engine-on-amd-compute)
-
-- **SFCompute**: [Large Scale Inference OpenAI-compatible inference in the world, 85%+ cheaper than other option](https://sfcompute.com/inference)
 
 These aren't just marketing claims - they're real-world results from companies betting their business on this technology.
 
@@ -432,6 +432,10 @@ def grayscale(pic):
 
 *Clone the repo and run locally, or just follow along*
 
+```bash
+git clone https://github.com/modular/workshops
+cd workshops/pytorch-max-bridge
+```
 
 ---
 
@@ -462,8 +466,10 @@ def grayscale(pic):
 ---
 
 ### 📚 Resources
+
 - **Documentation**: [docs.modular.com](https://docs.modular.com)
 - **Source Code**: [github.com/modular/modular](https://github.com/modular/modular)
+- **GPU Puzzles**: [puzzles.modular.com](https://puzzles.modular.com)
 - **Community**: [forum.modular.com](https://forum.modular.com/) for support and discussion
 
 <aside class="notes">
