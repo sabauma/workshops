@@ -2,7 +2,8 @@
 authors = ["Modular <hello@modular.com>"]
 channels = ["conda-forge", "https://conda.modular.com/max-nightly"]
 name = "pytorch-max-bridge"
-# Add support for multiple platforms - slides work on Linux, Mac, and Windows
+# Add support for multiple platforms
+# Slides work on Linux, Mac, and Windows but MAX/Mojo GPU requires Linux
 platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
 version = "0.0.0"
 
