@@ -29,7 +29,7 @@ pytorch-triton-rocm = { index = "https://download.pytorch.org/whl/rocm6.3" }
 slide-install = "npm install"
 dev-slides = "npm run dev"
 slides = "npm start"
-pdf = "npm run pdf"
+pdf = "bash -c 'npx serve . -p 3033 & sleep 5 && npx decktape reveal http://localhost:3033 pytorch-max-bridge-slides.pdf && pkill -f \"serve . -p 3033\"'"
 
 # Cross-platform dependencies
 [dependencies]
