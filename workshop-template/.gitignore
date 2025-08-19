@@ -1,0 +1,82 @@
+# Pixi environments
+.pixi
+*.egg-info
+
+# Jupyter Notebook checkpoints
+*.ipynb_checkpoints
+
+# Pixi lock file (optional - some teams prefer to commit this)
+pixi.lock
+
+# Compiled packages (add as needed for your workshop)
+*.mojopkg
+
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Workshop-specific temporary files
+*.tmp
+*.temp
+*.bak
+*_backup
+
+# Generated presentation files
+*.pdf
+slides-export/
+
+# Add your workshop-specific ignores here
+# [WORKSHOP_SPECIFIC_IGNORES]

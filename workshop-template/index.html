@@ -1,0 +1,378 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>[WORKSHOP_TITLE]</title>
+
+    <!-- Reveal.js Core CSS -->
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/monokai.css">
+
+    <!-- Local Fonts (optional - add your own fonts to fonts/ directory) -->
+    <link rel="stylesheet" href="fonts/fonts.css">
+
+    <style>
+        /* Custom Workshop Styling - Customize as needed */
+
+        /* Remove global background - clean white background for all slides */
+        .reveal .backgrounds .slide-background {
+            background: #ffffff !important;
+        }
+
+        /* First slide only - background image (optional) */
+        .reveal .backgrounds .slide-background:first-child {
+            background-image: url('images/[HERO_BACKGROUND_IMAGE]') !important;
+            background-size: 100% 100% !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+
+        /* All other slides - clean white background */
+        .reveal .slides section:not(:first-child) {
+            background: #ffffff !important;
+        }
+
+        /* CSS Variables for custom highlight.css (if using custom syntax highlighting) */
+        :root {
+            --workshop-code-bg: #1a1a1a;
+            --workshop-secondary-text: #f8f8f2;
+            --workshop-code-constant: #6a9955;
+            --workshop-primary-color: #007acc;
+            /* Customize your brand color */
+            --workshop-accent-color: #ff6b35;
+            /* Customize accent color */
+        }
+
+        /* Import emoji fonts for PDF support */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+
+        /* Headings */
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            color: #333 !important;
+            font-family: "Inter", "Arial", sans-serif !important;
+        }
+
+        .reveal h1 {
+            font-size: 2.5em !important;
+        }
+
+        .reveal h2 {
+            font-size: 1.8em !important;
+        }
+
+        .reveal h3 {
+            font-size: 1.4em !important;
+        }
+
+        /* Body text */
+        .reveal p,
+        .reveal li {
+            font-size: 1.2em !important;
+            line-height: 1.6 !important;
+        }
+
+        /* Code styling */
+        .reveal pre {
+            font-size: 0.85em !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+            margin: 20px 0 !important;
+        }
+
+        .reveal code {
+            background-color: var(--workshop-code-bg) !important;
+            color: var(--workshop-secondary-text) !important;
+            padding: 2px 6px !important;
+            border-radius: 4px !important;
+            font-family: "Fira Code", "Monaco", "Consolas", monospace !important;
+        }
+
+        /* Links */
+        .reveal a {
+            color: var(--workshop-primary-color) !important;
+            text-decoration: none !important;
+        }
+
+        .reveal a:hover {
+            color: var(--workshop-accent-color) !important;
+            text-decoration: underline !important;
+        }
+
+        /* Fragment animations */
+        .reveal .fragment.highlight-current-green.current-fragment {
+            color: #17ff2e !important;
+        }
+
+        /* Tables */
+        .reveal table {
+            border-collapse: collapse !important;
+            border-spacing: 0 !important;
+        }
+
+        .reveal table th,
+        .reveal table td {
+            border: 1px solid #ddd !important;
+            padding: 12px !important;
+            text-align: left !important;
+        }
+
+        .reveal table th {
+            background-color: var(--workshop-primary-color) !important;
+            color: white !important;
+            font-weight: bold !important;
+        }
+
+        /* Workshop-specific: Progress indicators */
+        .workshop-progress {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .workshop-step {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 20px;
+            background-color: #f0f0f0;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .workshop-step.active {
+            background-color: var(--workshop-primary-color);
+            color: white;
+        }
+
+        .workshop-step.completed {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        /* Workshop-specific: Callout boxes */
+        .callout {
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--workshop-primary-color);
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .callout.warning {
+            border-left-color: #ff9800;
+            background-color: #fff8e1;
+        }
+
+        .callout.success {
+            border-left-color: #4caf50;
+            background-color: #f1f8e9;
+        }
+
+        .callout.error {
+            border-left-color: #f44336;
+            background-color: #ffebee;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .reveal h1 {
+                font-size: 2em !important;
+            }
+
+            .reveal h2 {
+                font-size: 1.6em !important;
+            }
+
+            .reveal p,
+            .reveal li {
+                font-size: 1em !important;
+            }
+        }
+
+        /* Custom syntax highlighting for workshop-specific languages */
+        /* Add your own language-specific highlighting rules here */
+
+        /* Example: Custom language highlighting */
+        .reveal .hljs-custom-keyword {
+            color: #ff6b35 !important;
+            font-weight: bold !important;
+        }
+
+        .reveal .hljs-custom-string {
+            color: #a6e22e !important;
+        }
+
+        .reveal .hljs-custom-number {
+            color: #ae81ff !important;
+        }
+
+        .reveal .hljs-custom-type {
+            color: #f92672 !important;
+            font-weight: bold !important;
+        }
+
+        .reveal .hljs-custom-function {
+            color: #fd971f !important;
+        }
+
+        .reveal .hljs-custom-builtin {
+            color: #66d9ef !important;
+        }
+
+        .reveal .hljs-custom-meta {
+            color: #f92672 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section data-markdown="slides.md" data-separator="^\n---\n$" data-separator-vertical="^\n--\n$"
+                data-separator-notes="^Note:" data-charset="utf-8">
+            </section>
+        </div>
+    </div>
+
+    <!-- Reveal.js Core Scripts -->
+    <script src="node_modules/reveal.js/dist/reveal.js"></script>
+    <script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
+    <script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <!-- Workshop-specific language highlighting (optional) -->
+    <!-- Add your custom highlighting scripts here -->
+    <!-- <script src="highlight.js"></script> -->
+    <!-- <script src="[your-language].js"></script> -->
+
+    <script>
+        // Reveal.js Configuration
+        Reveal.initialize({
+            hash: true,
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            autoAnimateEasing: 'ease',
+            autoAnimateUnmatched: false,
+            autoAnimateDuration: 1.0,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+
+            // Customize navigation and interaction
+            keyboard: {
+                32: null, // Don't trigger next slide on spacebar (useful during demos)
+                // Add custom key bindings if needed
+            },
+
+            // Plugin configuration
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+
+            // Markdown configuration
+            markdown: {
+                smartypants: true
+            },
+
+            // Highlight configuration
+            highlight: {
+                highlightOnLoad: true,
+                escapeHTML: false
+            }
+        });
+
+        // Custom workshop functionality
+        Reveal.on('ready', function () {
+            // Custom syntax highlighting for workshop-specific languages
+            setTimeout(function () {
+                document.querySelectorAll('pre code').forEach(function (block) {
+                    // Add custom language detection and highlighting here
+
+                    // Example: Custom language highlighting
+                    if (block.className.includes('language-[YOUR_LANGUAGE]') ||
+                        block.textContent.includes('[LANGUAGE_SPECIFIC_KEYWORD]')) {
+                        block.className = 'language-[YOUR_LANGUAGE] hljs';
+
+                        // Apply highlighting
+                        if (typeof hljs !== 'undefined' && hljs.highlightElement) {
+                            hljs.highlightElement(block);
+                        }
+                    }
+                });
+            }, 100);
+
+            // Add any workshop-specific initialization code here
+            console.log('[WORKSHOP_NAME] slides initialized');
+        });
+
+        // Custom event handlers for workshop interactions
+        Reveal.on('slidechanged', function (event) {
+            // Handle slide changes - useful for tracking progress or updating UI
+            console.log('Slide changed to:', event.indexh);
+
+            // Example: Update progress indicators
+            updateWorkshopProgress(event.indexh);
+        });
+
+        // Workshop-specific helper functions
+        function updateWorkshopProgress(slideIndex) {
+            // Update progress indicators based on slide position
+            const progressSteps = document.querySelectorAll('.workshop-step');
+            const totalSlides = Reveal.getTotalSlides();
+            const progressPerStep = totalSlides / progressSteps.length;
+
+            progressSteps.forEach((step, index) => {
+                const stepStartSlide = index * progressPerStep;
+                step.classList.remove('active', 'completed');
+
+                if (slideIndex >= stepStartSlide + progressPerStep) {
+                    step.classList.add('completed');
+                } else if (slideIndex >= stepStartSlide) {
+                    step.classList.add('active');
+                }
+            });
+        }
+
+        // Add workshop-specific interactive features
+        function addWorkshopInteractivity() {
+            // Add event listeners for workshop-specific interactions
+            // Example: Handle code execution buttons, interactive demos, etc.
+        }
+
+        // Initialize workshop features when DOM is ready
+        document.addEventListener('DOMContentLoaded', function () {
+            addWorkshopInteractivity();
+        });
+    </script>
+</body>
+
+</html>
+
+<!-- Template Customization Notes (Remove these comments when done):
+
+1. Replace [WORKSHOP_TITLE] with your actual workshop title
+2. Update [HERO_BACKGROUND_IMAGE] with your hero image filename
+3. Customize CSS variables for your brand colors
+4. Add workshop-specific language highlighting by:
+   - Including language-specific JS files
+   - Updating the language detection in the ready event
+   - Adding CSS rules for syntax highlighting
+5. Remove unused CSS classes and add your own
+6. Test all functionality before workshop delivery
+7. Consider mobile responsiveness for your specific content
+8. Add accessibility improvements as needed
+
+-->
