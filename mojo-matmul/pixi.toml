@@ -1,0 +1,23 @@
+[workspace]
+authors = ["Modular <hello@modular.com>", "https://conda.modular.com/max-nightly"]
+channels = ["conda-forge"]
+name = "mojo-matmul"
+# Add support for multiple platforms - slides work everywhere, specialized content may be platform-specific
+platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
+version = "0.1.0"
+
+# Core workshop tasks - available on all platforms
+[tasks]
+slide-install = "npm install"
+dev-slides = "npm run dev"
+slides = "npm start"
+pdf = "bash -c 'npx serve . -p 3033 & sleep 5 && npx decktape reveal http://localhost:3033 [WORKSHOP_NAME]-slides.pdf && pkill -f \"serve . -p 3033\"'"
+
+# Cross-platform dependencies - required for slides
+[dependencies]
+nodejs = ">=22.13.0,<23"
+
+# Platform-specific dependencies - add as needed
+[target.linux-64.dependencies]
+python = ">=3.10,<3.13"
+# Add Linux-specific packages here
