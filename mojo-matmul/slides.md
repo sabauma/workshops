@@ -3,18 +3,7 @@
      Structure based on successful Modular workshop formats
 -->
 
-## Why matrix multiplication remains one of the most important problems in computer science
-
-<!-- <div style="text-align: center;">
-<img src="./images/[HERO_IMAGE]" alt="[HERO_IMAGE_ALT]" width="400" height="400">
-</div>
-
-<aside class="notes">
-- Welcome everyone, introduce yourself and your background
-- Brief overview of what participants will learn today
-- Set expectations for the session duration and format
-- Energy: Make this engaging and set the tone for an interactive workshop
-</aside> -->
+## Why matrix multiplication remains one of the most important problems
 
 ---
 
@@ -24,22 +13,26 @@
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 **2. Matrix Multiplication and LLMs**
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-**3. Naive Implementation**
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-**4. Memory Coalesing**
+**3. Naive Implementations**
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-**5. Shared Memory Tiling**
+**4. Memory Coalesing**
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
-**6. Tensor Cores**
+**5. Shared Memory Tiling**
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
-**7. Flash Attention**
+**6. Tensor Cores**
 <!-- .element: class="fragment" data-fragment-index="6" -->
+
+**7. Bonus - Flash Attention**
+<!-- .element: class="fragment" data-fragment-index="7" -->
+
+--
+
+<img src="./images/perf-preview.png">
 
 ---
 
@@ -50,10 +43,14 @@
 ### Chris Hoge
 - Developer Releations Manager at Modular
 - Studied Applied Mathematics
-- Involved in open source for over a decade.
+- Involved in open source infrastructure and computation projects for over a decade
 - hoge@modular.com
 
 ---
+
+**1. Matrix Multiplication**
+
+--
 
 **1. Matrix Multiplication**
 
@@ -115,7 +112,17 @@ For example, over **83%** of llama-8B's runtime is occupied executing some varia
 
 ---
 
-**Setting up the MAX Graph Interface**
+Let's get started!
+
+**To begin, we need to set up the MAX Graph Interface.**
+
+--
+
+The MAX Graph Interface is a high-performance computation framework that lets you build
+and execute efficient machine learning models.
+
+*It provides a flexible way to define computational workflows as graphs using
+a Python API.*
 
 --
 
@@ -234,7 +241,7 @@ With the naive algorithm on a 2.5 GHz AMD processor, we achieve:
 
 ---
 
-**Aside: Why GPUs?**
+**The limitations of CPUs**
 
 - CPUs are limited to on the number of cores they have
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -242,12 +249,15 @@ With the naive algorithm on a 2.5 GHz AMD processor, we achieve:
 <!-- .element: class="fragment" data-fragment-index="2" -->
 - High-end CPUs have on the order of 128 cores.
 <!-- .element: class="fragment" data-fragment-index="3" -->
+- SIMD can give us come additional parallelism, but it's still limited
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 --
 
-**Aside: Why GPUs?**
+**How GPUs can help**
 
 - GPUs, on the other hand, offer massive parallelism
+<!-- .element: class="fragment" data-fragment-index="1" --> 
 - A modern GPUs can handle over 100,000 threads simultaneously
 <!-- .element: class="fragment" data-fragment-index="2" --> 
 - This makes them the ideal hardware choice for repetitive, data-parallel operations
@@ -256,11 +266,36 @@ With the naive algorithm on a 2.5 GHz AMD processor, we achieve:
 Like, for example, *matmul*
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
+--
+
+**How to think about programming GPUs**
+
+- While in traditional CPU programming we process data sequentially through loops:
+
+```python
+# CPU approach
+for i in range(data_size):
+	result[i] = process(data[i])
+```
+
+--
+
+**How to think about programming GPUs**
+
+- In GPU programming, we map thousands of parallel threads directly onto the data:
+
+```python
+# GPU approach (conceptual)
+thread_id = global_idx.x
+result[thread_id] = process(data[thread_id])
+```
+
 ---
 
-**3b. Naive *matmul* in Mojo on CPU**
+**3b. Naive *matmul* in Mojo on GPU**
 
 The idea: distribute every dot product to a GPU core.
+<!-- .element: class="fragment" data-fragment-index="1" --> 
 
 --
 
@@ -572,7 +607,9 @@ Instead of materializing the entire attention matrix in memory at once, Flash At
 
 --
 
-The key innovation is the online softmax technique that maintains running statistics (row maximum and row sum) across tiles, allowing it to compute numerically stable softmax without needing the entire row of attention scores.
+The key innovation is the online softmax technique that maintains running statistics across tiles, allowing it to compute numerically stable softmax without needing the entire row of attention scores.
+
+<img src="./images/shared-memory-tiling.png">
 
 --
 
@@ -582,19 +619,28 @@ https://modular.github.io/modular/matmul-to-flash-attention
 
 ---
 
-**Resources**
+**Additional Resources**
 
 - This talk: https://github.com/modular/workshops
-- Simon Boehm's *matmul* optimization notebook: https://siboehm.com/articles/22/CUDA-MMM
 - *matmul* custom op tutorial: https://docs.modular.com/max/tutorials/custom-ops-matmul/
+- Simon Boehm's *matmul* optimization notebook: https://siboehm.com/articles/22/CUDA-MMM
 
-- Modular community: https://forum.modular.com
+- Modular community: https://www.modular.com/community
 
 --
 
 We're hiring!
 
+- [Cloud Inference Tech Lead](https://www.modular.com/company/career-post?4584393005&gh_jid=4584393005)
+- [GenAI Performance Engineer](https://www.modular.com/company/career-post?4522385005&gh_jid=4522385005)
+- [GPU Kernel Engineering Manager](https://www.modular.com/company/career-post?4589475005&gh_jid=4589475005)
+- [Lead AI Graph Compiler Engineer](https://www.modular.com/company/career-post?4584207005&gh_jid=4584207005)
+- [Senior AI Modeling Engineer](https://www.modular.com/company/career-post?4563359005&gh_jid=4563359005)
+- [Software Engineer, GenAI Serving](https://www.modular.com/company/career-post?4522365005&gh_jid=4522365005)
+
 --
 
 Questions?
+
+<img src="./images/were-hiring.jpg" width="65%">
 
