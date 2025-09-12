@@ -41,7 +41,7 @@
 --
 
 ### Chris Hoge
-- Developer Releations Manager at Modular
+- Developer Relations Manager at Modular
 - Studied Applied Mathematics
 - Involved in open source infrastructure and computation projects for over a decade
 - hoge@modular.com
@@ -384,9 +384,6 @@ To improve performance, adjust memory loading
 --
 
 ```mojo
-@__llvm_metadata(
-    MAX_THREADS_PER_BLOCK_METADATA=StaticTuple[Int32, 1](OPTIMIZED_NUM_THREADS)
-)
 fn coalescing_matrix_multiplication[
     dtype: DType,
     a_layout: Layout,
@@ -474,10 +471,7 @@ The idea is to copy chunks of tiled memory to the SMs, computing portions of the
 
 --
 
-```mojo [18-23|25-30|33|35-40|42-50|52-58|61]
-@__llvm_metadata(
-    MAX_THREADS_PER_BLOCK_METADATA=StaticTuple[Int32, 1](OPTIMIZED_NUM_THREADS)
-)
+```mojo [6-8|15-20|22-27|32-37|39-47|49-55|58]
 fn tiled_matrix_multiplication[
     dtype: DType,
     a_layout: Layout,
@@ -588,16 +582,16 @@ MAX contains interfaces that make it more ergonomic to program these dedicated h
 
 ---
 
-**7. Flash Attention**
-
---
-
 While MAX and other accelerator libraries will provide you with pre-optimized *matmul* operators,
 understanding the optimizations behind *matmul* are useful for developing other GPU optimizations.
 
 --
 
-For example, the attention mechanism for LLMs consists of several *matmuls* enclosed in a non-linear *softmax* operation.
+**7. Flash Attention**
+
+--
+
+The attention mechanism for LLMs consists of several *matmuls* enclosed in a non-linear *softmax* operation.
 
 <img src="./images/multi-head-attention.png" width="25%">
 
