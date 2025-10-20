@@ -1,0 +1,44 @@
+[workspace]
+authors = ["Modular <hello@modular.com>"]
+channels = ["conda-forge", "https://conda.modular.com/max-nightly"]
+name = "pytorch-conf-2025"
+platforms = ["linux-64"]
+version = "0.0.0"
+
+[feature.nvidia]
+channels = ["nvidia"]
+system-requirements = { cuda = "12" }
+
+[feature.nvidia.dependencies]
+cuda-toolkit = "12.*"
+
+[feature.nvidia.pypi-dependencies]
+torch = { version = "==2.7.1", index = "https://download.pytorch.org/whl/cu128" }
+
+[feature.amd]
+system-requirements = {}
+
+[feature.amd.pypi-dependencies]
+torch = { version = "==2.7.1", index = "https://download.pytorch.org/whl/rocm6.3" }
+pytorch-triton-rocm = { index = "https://download.pytorch.org/whl/rocm6.3" }
+
+[tasks]
+
+[dependencies]
+python = ">=3.10,<3.13"
+modular = "*"
+ipykernel = ">=6.29.5,<7"
+matplotlib = ">=3.10.3,<4"
+rich = ">=14.0.0,<15"
+notebook = ">=7.4.4,<8"
+ipywidgets = ">=8.1.7,<9"
+jupyterlab = ">=4.4.4,<5"
+scipy = ">=1.16.0,<2"
+pandas = ">=2.3.3,<3"
+
+[pypi-dependencies]
+transformers = ">=4.53.2, <5"
+
+[environments]
+nvidia = { features = ["nvidia"], solve-group = "nvidia" }
+amd = { features = ["amd"], solve-group = "amd" }

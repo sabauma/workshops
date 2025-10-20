@@ -1,0 +1,11 @@
+# pixi environments
+.pixi/*
+!.pixi/config.toml
+*.lock
+*.ipynb_checkpoints
+*.mojopkg
+!src/results/.gitkeep
+*.log
+*.csv
+*.png
+*.pdf
