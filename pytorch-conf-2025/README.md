@@ -52,7 +52,7 @@ curl -fsSL https://pixi.sh/install.sh | bash
 
 Ensure your system meets the GPU requirements for optimal performance:
 
-**[Modular MAX GPU Requirements](https://docs.modular.com/max/install#gpu-requirements)**
+**[MAX GPU Requirements](https://docs.modular.com/max/packages#gpu-compatibility)**
 
 ## Quick Start
 
